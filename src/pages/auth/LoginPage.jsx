@@ -1,6 +1,16 @@
-import { Link } from 'react-router-dom'
+import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
 
 export default function LoginPage() {
+  const [getUserName, setUserName] = useState("");
+  const [getPassword, setPassword] = useState("");
+
+  function login() {
+    if (getUserName == "admin" && getPassword == "admin") {
+      alert("Bienvenido...");
+    }
+  }
+
   return (
     <section className="auth-card" aria-label="Sign in">
       <header className="auth-card__header">
@@ -39,6 +49,7 @@ export default function LoginPage() {
               Username
             </label>
             <input
+              onChange={(e) => setUserName(e.target.value)}
               id="username"
               className="input"
               placeholder="jtorres"
@@ -51,6 +62,7 @@ export default function LoginPage() {
               Password
             </label>
             <input
+              onChange={(e) => setPassword(e.target.value)}
               id="password"
               className="input"
               type="password"
@@ -71,17 +83,20 @@ export default function LoginPage() {
         </div>
 
         <div className="form__actions">
-          <Link className="btn btn--primary btn--block" to="/dashboard">
+          <button
+            type="button"
+            onClick={login}
+            className="btn btn--primary btn--block"
+            to="/dashboard"
+          >
             Sign in
-          </Link>
+          </button>
         </div>
 
         <footer className="auth-card__footer">
-          <div className="muted">
-            Roles supported: admin, recruiter
-          </div>
+          <div className="muted">Roles supported: admin, recruiter</div>
         </footer>
       </form>
     </section>
-  )
+  );
 }
