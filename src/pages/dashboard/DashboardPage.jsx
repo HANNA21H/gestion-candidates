@@ -1,4 +1,6 @@
-import { Link } from 'react-router-dom'
+import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { end_points } from "../../services/api";
 
 export default function DashboardPage() {
   return (
@@ -6,7 +8,9 @@ export default function DashboardPage() {
       <header className="page__header">
         <div>
           <h1 className="page__title">Dashboard</h1>
-          <p className="page__subtitle">Overview of your recruitment pipeline</p>
+          <p className="page__subtitle">
+            Overview of your recruitment pipeline
+          </p>
         </div>
         <div className="page__actions">
           <Link className="btn" to="/offers/new">
@@ -64,7 +68,9 @@ export default function DashboardPage() {
           <header className="card__header">
             <div>
               <h2 className="card__title">Recent candidates</h2>
-              <p className="card__subtitle">Latest profiles added to the system</p>
+              <p className="card__subtitle">
+                Latest profiles added to the system
+              </p>
             </div>
             <Link className="link" to="/candidates">
               View all
@@ -136,7 +142,9 @@ export default function DashboardPage() {
           <header className="card__header">
             <div>
               <h2 className="card__title">Open offers</h2>
-              <p className="card__subtitle">Roles currently receiving candidates</p>
+              <p className="card__subtitle">
+                Roles currently receiving candidates
+              </p>
             </div>
             <Link className="link" to="/offers">
               View all
@@ -156,7 +164,9 @@ export default function DashboardPage() {
               <tbody>
                 <tr>
                   <td>
-                    <div className="cell-title">Backend Developer (Node.js)</div>
+                    <div className="cell-title">
+                      Backend Developer (Node.js)
+                    </div>
                     <div className="muted">Bogotá, CO · Hybrid</div>
                   </td>
                   <td>AndesFintech</td>
@@ -205,5 +215,5 @@ export default function DashboardPage() {
         </section>
       </div>
     </section>
-  )
+  );
 }

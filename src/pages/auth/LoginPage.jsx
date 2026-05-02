@@ -1,13 +1,30 @@
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
+import { end_points } from "../../services/api";
 
 export default function LoginPage() {
   const [getUserName, setUserName] = useState("");
   const [getPassword, setPassword] = useState("");
+  const [getUsers, setUsers] = useState([]);
+
+  function fetchData() {
+    fetch(end_points.users)
+      .then((response) => response.json())
+      .then((data) => setUsers(data));
+  }
+
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   function login() {
-    if (getUserName == "admin" && getPassword == "admin") {
-      alert("Bienvenido...");
+    let auth = getUsers.find(
+      (item) => getUserName == item.username && getPassword == item.password,
+    );
+    if (auth) {
+      window.location.href = "/dashboard";
+    } else {
+      alert("Error de credenciales...");
     }
   }
 
