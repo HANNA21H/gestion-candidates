@@ -1,6 +1,19 @@
-import { Link } from 'react-router-dom'
+import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
 
 export default function CandidatesListPage() {
+  const [getCandidates, setCandidates] = useState([]);
+
+  function fetchData() {
+    fetch("https://app-gestion-candidatos-am-api.onrender.com/candidates")
+      .then((response) => response.json())
+      .then((data) => setCandidates(data));
+  }
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
   return (
     <section className="page">
       <header className="page__header">
@@ -19,7 +32,9 @@ export default function CandidatesListPage() {
         <header className="card__header">
           <div>
             <h2 className="card__title">Search and filters</h2>
-            <p className="card__subtitle">Find candidates by status, seniority or offer</p>
+            <p className="card__subtitle">
+              Find candidates by status, seniority or offer
+            </p>
           </div>
         </header>
 
@@ -97,71 +112,37 @@ export default function CandidatesListPage() {
                 <th className="right">Actions</th>
               </tr>
             </thead>
-            <tbody>
-              <tr>
-                <td>
-                  <div className="cell-title">Ana Martínez</div>
-                  <div className="muted">ana.martinez@gmail.com · +57 301 555 0101</div>
-                </td>
-                <td>Bogotá, CO</td>
-                <td>Junior</td>
-                <td>
-                  <span className="badge">New</span>
-                </td>
-                <td className="right">
-                  <div className="row-actions">
-                    <Link className="btn btn--sm" to="/candidates/1">
-                      Open
-                    </Link>
-                    <Link className="btn btn--sm" to="/candidates/1/edit">
-                      Edit
-                    </Link>
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <div className="cell-title">Carlos Rojas</div>
-                  <div className="muted">c.rojas@gmail.com · +57 300 000 0000</div>
-                </td>
-                <td>Medellín, CO</td>
-                <td>Mid</td>
-                <td>
-                  <span className="badge badge--info">In review</span>
-                </td>
-                <td className="right">
-                  <div className="row-actions">
-                    <Link className="btn btn--sm" to="/candidates/2">
-                      Open
-                    </Link>
-                    <Link className="btn btn--sm" to="/candidates/2/edit">
-                      Edit
-                    </Link>
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <div className="cell-title">Laura Gómez</div>
-                  <div className="muted">laura.gomez@gmail.com · +57 311 111 1111</div>
-                </td>
-                <td>Cali, CO</td>
-                <td>Senior</td>
-                <td>
-                  <span className="badge badge--success">Interview</span>
-                </td>
-                <td className="right">
-                  <div className="row-actions">
-                    <Link className="btn btn--sm" to="/candidates/3">
-                      Open
-                    </Link>
-                    <Link className="btn btn--sm" to="/candidates/3/edit">
-                      Edit
-                    </Link>
-                  </div>
-                </td>
-              </tr>
-            </tbody>
+            {getCandidates.length <= 0 ? (
+              <h1>No hay candidatos disponibles</h1>
+            ) : (
+              <tbody>
+                {getCandidates.map((candidate) => (
+                  <tr>
+                    <td>
+                      <div className="cell-title">{candidate.fullName}</div>
+                      <div className="muted">
+                        {candidate.email} · {candidate.phone}
+                      </div>
+                    </td>
+                    <td>{candidate.location}</td>
+                    <td>{candidate.seniority}</td>
+                    <td>
+                      <span className="badge">{candidate.status}</span>
+                    </td>
+                    <td className="right">
+                      <div className="row-actions">
+                        <Link className="btn btn--sm" to="/candidates/1">
+                          Open
+                        </Link>
+                        <Link className="btn btn--sm" to="/candidates/1/edit">
+                          Edit
+                        </Link>
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            )}
           </table>
         </div>
 
@@ -178,5 +159,5 @@ export default function CandidatesListPage() {
         </footer>
       </section>
     </section>
-  )
+  );
 }
